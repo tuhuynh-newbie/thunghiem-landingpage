@@ -5,538 +5,610 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kids Coding Academy — Lập Trình & Tiếng Anh Cho Trẻ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Nunito:wght@700;800;900&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-/* ── TOKENS ─────────────────────────────────────────── */
+/* ── GOOGLE SITES COMPATIBLE TOKENS ─────────────────── */
+/* Palette mirrors Google's material design + Google Sites default themes */
 :root {
-  --navy:   #0A0F2C;
-  --blue:   #2D6EFB;
-  --blue2:  #1A4FD6;
-  --mint:   #00E5C9;
-  --coral:  #FF6B4A;
-  --cream:  #FFF8F0;
-  --grey:   #F0F4FF;
-  --text:   #1A1F3C;
-  --muted:  #64748B;
-  --white:  #FFFFFF;
-  --r-card: 20px;
-  --r-pill: 999px;
-  --shadow: 0 20px 60px rgba(10,15,44,.12);
+  --gs-blue:    #1A73E8;   /* Google Blue — primary CTA */
+  --gs-blue2:   #1557B0;   /* Darker Google Blue */
+  --gs-teal:    #00897B;   /* Google Teal */
+  --gs-teal-lt: #E0F2F1;   /* Light teal bg */
+  --gs-orange:  #E8710A;   /* Google Orange */
+  --gs-orange-lt:#FEF3E2;
+  --gs-green:   #1E8E3E;   /* Google Green */
+  --gs-red:     #D93025;   /* Google Red */
+  --gs-navy:    #202124;   /* Google's dark text color */
+  --gs-grey1:   #F8F9FA;   /* Google grey background */
+  --gs-grey2:   #E8EAED;
+  --gs-grey3:   #BDC1C6;
+  --gs-text:    #202124;
+  --gs-muted:   #5F6368;
+  --gs-white:   #FFFFFF;
+  --r-sm:       8px;
+  --r-md:       12px;
+  --r-lg:       16px;
+  --r-xl:       24px;
+  --r-pill:     999px;
+  --shadow-sm:  0 1px 3px rgba(60,64,67,.15), 0 1px 2px rgba(60,64,67,.1);
+  --shadow-md:  0 2px 6px rgba(60,64,67,.15), 0 1px 4px rgba(60,64,67,.12);
+  --shadow-lg:  0 4px 16px rgba(60,64,67,.15), 0 2px 8px rgba(60,64,67,.1);
 }
 
-/* ── RESET ──────────────────────────────────────────── */
+/* ── GOOGLE SITES IFRAME RESET ──────────────────────── */
+/* Reset margin/padding for clean iframe embedding */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body { font-family:'Inter', sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; }
-img { max-width:100%; display:block; }
+html { scroll-behavior:smooth; font-size:16px; }
+body {
+  font-family:'Roboto', 'Google Sans', Arial, sans-serif;
+  background:var(--gs-white);
+  color:var(--gs-text);
+  overflow-x:hidden;
+  /* No fixed position elements - Google Sites iframes don't handle them well */
+}
 a { text-decoration:none; color:inherit; }
+img { max-width:100%; display:block; }
 
 /* ── UTILITY ─────────────────────────────────────────── */
-.container { max-width:1160px; margin:auto; padding:0 24px; }
-.tag {
-  display:inline-block; font-family:'Nunito',sans-serif; font-weight:700; font-size:.75rem;
-  letter-spacing:.08em; text-transform:uppercase;
-  padding:4px 14px; border-radius:var(--r-pill);
-  background:rgba(45,110,251,.1); color:var(--blue);
-  margin-bottom:16px;
+.container { max-width:1100px; margin:0 auto; padding:0 24px; }
+
+.chip {
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:'Google Sans', sans-serif; font-weight:500; font-size:.75rem;
+  letter-spacing:.04em; text-transform:uppercase;
+  padding:5px 14px; border-radius:var(--r-pill);
+  border:1.5px solid var(--gs-blue);
+  color:var(--gs-blue);
+  margin-bottom:14px;
 }
-.tag--mint { background:rgba(0,229,201,.15); color:#009B8D; }
-.tag--coral { background:rgba(255,107,74,.12); color:#D94E2B; }
-.section-head { text-align:center; margin-bottom:56px; }
-.section-head h2 { font-family:'Nunito',sans-serif; font-size:clamp(1.8rem,3vw,2.6rem); font-weight:900; color:var(--navy); line-height:1.2; }
-.section-head p  { margin-top:12px; color:var(--muted); font-size:1.05rem; max-width:540px; margin-inline:auto; }
+.chip--teal  { border-color:var(--gs-teal); color:var(--gs-teal); }
+.chip--orange{ border-color:var(--gs-orange); color:var(--gs-orange); }
+.chip--green { border-color:var(--gs-green); color:var(--gs-green); }
+
+.section-head { text-align:center; margin-bottom:52px; }
+.section-head h2 {
+  font-family:'Google Sans', 'Nunito', sans-serif; font-weight:700;
+  font-size:clamp(1.75rem,3vw,2.4rem); color:var(--gs-navy); line-height:1.25;
+}
+.section-head p {
+  margin-top:12px; color:var(--gs-muted); font-size:1rem;
+  max-width:520px; margin-inline:auto; line-height:1.65;
+}
 
 /* ── BUTTONS ─────────────────────────────────────────── */
-.btn-primary {
+.btn-filled {
   display:inline-flex; align-items:center; gap:8px;
-  background:var(--blue); color:#fff;
-  font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem;
-  padding:14px 30px; border-radius:var(--r-pill);
-  transition:transform .2s, box-shadow .2s;
-  box-shadow:0 6px 24px rgba(45,110,251,.35);
+  background:var(--gs-blue); color:#fff;
+  font-family:'Google Sans', sans-serif; font-weight:500; font-size:.95rem;
+  padding:12px 28px; border-radius:var(--r-pill);
+  box-shadow:0 1px 3px rgba(26,115,232,.4);
+  transition:background .2s, box-shadow .2s, transform .15s;
+  cursor:pointer;
 }
-.btn-primary:hover { transform:translateY(-3px); box-shadow:0 10px 32px rgba(45,110,251,.45); }
-.btn-primary svg { width:18px; height:18px; }
+.btn-filled:hover {
+  background:var(--gs-blue2);
+  box-shadow:0 4px 12px rgba(26,115,232,.4);
+  transform:translateY(-1px);
+}
+.btn-filled--teal { background:var(--gs-teal); box-shadow:0 1px 3px rgba(0,137,123,.4); }
+.btn-filled--teal:hover { background:#00695C; box-shadow:0 4px 12px rgba(0,137,123,.4); }
 
-.btn-ghost {
+.btn-outlined {
   display:inline-flex; align-items:center; gap:8px;
-  background:transparent; color:var(--blue);
-  font-family:'Nunito',sans-serif; font-weight:700; font-size:.95rem;
-  padding:13px 28px; border-radius:var(--r-pill);
-  border:2px solid var(--blue);
+  background:transparent; color:var(--gs-blue);
+  font-family:'Google Sans', sans-serif; font-weight:500; font-size:.95rem;
+  padding:11px 26px; border-radius:var(--r-pill);
+  border:1.5px solid var(--gs-blue);
   transition:background .2s, color .2s;
+  cursor:pointer;
 }
-.btn-ghost:hover { background:var(--blue); color:#fff; }
+.btn-outlined:hover { background:rgba(26,115,232,.06); }
+.btn-outlined--white { color:#fff; border-color:rgba(255,255,255,.6); }
+.btn-outlined--white:hover { background:rgba(255,255,255,.12); }
 
 /* ═══════════════════════════════════════════════════════
-   NAV
+   NAV — flat, no position:fixed (Google Sites compat)
 ═══════════════════════════════════════════════════════ */
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  padding:16px 0;
-  background:rgba(10,15,44,.82);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.07);
+.site-nav {
+  background:var(--gs-navy);
+  padding:14px 0;
+  border-bottom:3px solid var(--gs-blue);
 }
-nav .container {
-  display:flex; align-items:center; justify-content:space-between;
+.site-nav .container {
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
 }
 .nav-logo {
-  font-family:'Nunito',sans-serif; font-weight:900; font-size:1.25rem;
-  color:#fff; display:flex; align-items:center; gap:8px;
+  display:flex; align-items:center; gap:10px;
+  font-family:'Google Sans', sans-serif; font-weight:700; font-size:1.15rem;
+  color:#fff;
 }
-.nav-logo span { color:var(--mint); }
-.nav-logo .logo-dot {
-  width:32px; height:32px; border-radius:10px;
-  background:linear-gradient(135deg,var(--blue),var(--mint));
-  display:grid; place-items:center; font-size:1rem;
+.nav-logo-icon {
+  width:36px; height:36px; border-radius:var(--r-sm);
+  background:var(--gs-blue);
+  display:grid; place-items:center; font-size:1.1rem;
+  flex-shrink:0;
 }
+.nav-logo em { font-style:normal; color:#8AB4F8; } /* Google's light blue */
+
 .nav-links {
-  display:flex; align-items:center; gap:32px;
-  list-style:none;
+  display:flex; align-items:center; gap:28px; list-style:none;
 }
-.nav-links a { color:rgba(255,255,255,.75); font-size:.9rem; font-weight:600; transition:color .2s; }
-.nav-links a:hover { color:#fff; }
+.nav-links a {
+  color:rgba(255,255,255,.75); font-size:.875rem; font-weight:500;
+  transition:color .2s; padding:4px 0;
+  border-bottom:2px solid transparent;
+}
+.nav-links a:hover { color:#fff; border-bottom-color:var(--gs-blue); }
+
 .nav-cta {
-  background:var(--mint); color:var(--navy);
-  font-family:'Nunito',sans-serif; font-weight:800; font-size:.88rem;
-  padding:9px 22px; border-radius:var(--r-pill);
-  transition:opacity .2s;
+  background:var(--gs-blue); color:#fff;
+  font-family:'Google Sans', sans-serif; font-weight:500; font-size:.875rem;
+  padding:9px 20px; border-radius:var(--r-pill);
+  transition:background .2s; white-space:nowrap;
 }
-.nav-cta:hover { opacity:.85; }
+.nav-cta:hover { background:var(--gs-blue2); }
 
 /* ═══════════════════════════════════════════════════════
    HERO
 ═══════════════════════════════════════════════════════ */
 .hero {
-  min-height:100vh;
-  background:var(--navy);
-  display:flex; align-items:center;
-  padding:120px 0 80px;
+  background:var(--gs-navy);
+  padding:72px 0 80px;
   position:relative; overflow:hidden;
 }
 
-/* CSS-only animated orbs */
-.orb {
-  position:absolute; border-radius:50%;
-  filter:blur(80px); opacity:.55;
-  animation:orbFloat 8s ease-in-out infinite alternate;
+/* Subtle geometric accent — signature element */
+.hero-geo {
+  position:absolute; top:0; right:0;
+  width:50%; height:100%;
+  background:linear-gradient(135deg, rgba(26,115,232,.15) 0%, rgba(0,137,123,.1) 100%);
+  clip-path:polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
-.orb-1 { width:520px; height:520px; background:radial-gradient(circle,#2D6EFB 0%,transparent 70%); top:-120px; left:-100px; animation-duration:9s; }
-.orb-2 { width:400px; height:400px; background:radial-gradient(circle,#00E5C9 0%,transparent 70%); bottom:-80px; right:-60px; animation-duration:11s; animation-delay:2s; }
-.orb-3 { width:300px; height:300px; background:radial-gradient(circle,#FF6B4A 0%,transparent 70%); top:40%; right:20%; opacity:.3; animation-duration:13s; animation-delay:4s; }
-@keyframes orbFloat { from { transform:translate(0,0) scale(1); } to { transform:translate(30px,40px) scale(1.08); } }
-
-/* grid dots bg */
-.hero::before {
-  content:''; position:absolute; inset:0;
-  background-image:radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+.hero-geo::before {
+  content:'';
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(26,115,232,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,115,232,.08) 1px, transparent 1px);
   background-size:32px 32px;
 }
 
 .hero .container {
   position:relative; z-index:2;
-  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  display:grid; grid-template-columns:1fr 420px; gap:56px; align-items:center;
 }
-.hero-text .eyebrow {
-  display:inline-flex; align-items:center; gap:8px;
-  background:rgba(0,229,201,.12); border:1px solid rgba(0,229,201,.25);
-  color:var(--mint); font-family:'Nunito',sans-serif; font-weight:700; font-size:.82rem;
-  letter-spacing:.06em; text-transform:uppercase;
-  padding:6px 16px; border-radius:var(--r-pill); margin-bottom:24px;
-}
-.hero-text .eyebrow::before { content:'●'; font-size:.55rem; }
-.hero-text h1 {
-  font-family:'Nunito',sans-serif; font-weight:900;
-  font-size:clamp(2.2rem,4vw,3.4rem); line-height:1.15;
-  color:#fff;
-}
-.hero-text h1 em {
-  font-style:normal;
-  background:linear-gradient(90deg,var(--mint),#4DD8E8);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-}
-.hero-text p {
-  margin-top:20px; color:rgba(255,255,255,.65); font-size:1.05rem; line-height:1.7;
-}
-.hero-actions { margin-top:36px; display:flex; gap:14px; flex-wrap:wrap; }
-.hero-trust {
-  margin-top:40px; display:flex; align-items:center; gap:16px;
-  padding-top:32px; border-top:1px solid rgba(255,255,255,.1);
-}
-.trust-avatars { display:flex; }
-.trust-avatars span {
-  width:36px; height:36px; border-radius:50%;
-  background:linear-gradient(135deg,#2D6EFB,#00E5C9);
-  border:2px solid var(--navy);
-  display:grid; place-items:center; font-size:.8rem;
-  margin-left:-8px; color:#fff; font-weight:700;
-}
-.trust-avatars span:first-child { margin-left:0; }
-.trust-text { font-size:.85rem; color:rgba(255,255,255,.55); }
-.trust-text strong { color:#fff; display:block; }
 
-/* Hero visual panel */
-.hero-visual {
-  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(138,180,248,.12); border:1px solid rgba(138,180,248,.3);
+  color:#8AB4F8; font-family:'Google Sans', sans-serif; font-weight:500; font-size:.78rem;
+  letter-spacing:.06em; text-transform:uppercase;
+  padding:5px 14px; border-radius:var(--r-pill); margin-bottom:20px;
 }
-.hv-card {
+.hero-eyebrow::before { content:'●'; font-size:.45rem; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.hero h1 {
+  font-family:'Google Sans', 'Nunito', sans-serif; font-weight:700;
+  font-size:clamp(2rem,3.8vw,3.1rem); line-height:1.2; color:#fff;
+}
+.hero h1 strong {
+  display:block;
+  background:linear-gradient(90deg,#8AB4F8,#81C995);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  font-weight:700;
+}
+.hero-sub {
+  margin-top:18px; color:rgba(255,255,255,.65);
+  font-size:1.02rem; line-height:1.7; max-width:460px;
+}
+.hero-actions { margin-top:32px; display:flex; gap:12px; flex-wrap:wrap; }
+
+.hero-trust {
+  margin-top:36px; padding-top:28px;
+  border-top:1px solid rgba(255,255,255,.1);
+  display:flex; align-items:center; gap:14px;
+}
+.trust-faces { display:flex; }
+.trust-face {
+  width:34px; height:34px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gs-blue),#81C995);
+  border:2px solid var(--gs-navy);
+  display:grid; place-items:center; font-size:.75rem; color:#fff; font-weight:700;
+}
+.trust-face+.trust-face { margin-left:-8px; }
+.trust-copy { font-size:.82rem; color:rgba(255,255,255,.55); line-height:1.4; }
+.trust-copy strong { color:#fff; display:block; }
+
+/* Hero stats panel */
+.hero-panel {
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+}
+.hp-card {
   background:rgba(255,255,255,.07);
   border:1px solid rgba(255,255,255,.1);
-  border-radius:18px; padding:22px;
-  backdrop-filter:blur(10px);
+  border-radius:var(--r-lg); padding:20px 18px;
+  display:flex; flex-direction:column; gap:8px;
+  transition:background .2s;
+}
+.hp-card:hover { background:rgba(255,255,255,.11); }
+.hp-card.span2 { grid-column:span 2; }
+.hp-card.accent { background:rgba(26,115,232,.25); border-color:rgba(138,180,248,.3); }
+.hp-icon { font-size:1.75rem; }
+.hp-num { font-family:'Google Sans', sans-serif; font-weight:700; font-size:2rem; color:#8AB4F8; line-height:1; }
+.hp-label { font-size:.78rem; color:rgba(255,255,255,.55); line-height:1.4; }
+.hp-name { font-family:'Google Sans', sans-serif; font-weight:500; color:#fff; font-size:.9rem; }
+
+/* ═══════════════════════════════════════════════════════
+   WHY CHOOSE US
+═══════════════════════════════════════════════════════ */
+.why { padding:80px 0; background:var(--gs-grey1); }
+.why-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+}
+.why-card {
+  background:var(--gs-white); border-radius:var(--r-lg); padding:28px 22px;
+  box-shadow:var(--shadow-sm); border-top:3px solid transparent;
+  display:flex; flex-direction:column; gap:10px;
+  transition:box-shadow .2s, transform .2s;
+}
+.why-card:hover { box-shadow:var(--shadow-lg); transform:translateY(-3px); }
+.why-card.wc-blue  { border-top-color:var(--gs-blue); }
+.why-card.wc-teal  { border-top-color:var(--gs-teal); }
+.why-card.wc-orange{ border-top-color:var(--gs-orange); }
+.why-card.wc-green { border-top-color:var(--gs-green); }
+.why-icon { font-size:2rem; }
+.why-card h3 { font-family:'Google Sans', sans-serif; font-weight:700; font-size:.97rem; color:var(--gs-navy); }
+.why-card p  { font-size:.85rem; color:var(--gs-muted); line-height:1.6; }
+
+/* ═══════════════════════════════════════════════════════
+   FEATURED COURSES
+═══════════════════════════════════════════════════════ */
+.courses { padding:80px 0; background:var(--gs-white); }
+.courses-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+}
+.course-card {
+  border-radius:var(--r-xl); overflow:hidden;
+  box-shadow:var(--shadow-md);
+  display:flex; flex-direction:column;
+  transition:box-shadow .2s, transform .2s;
+}
+.course-card:hover { box-shadow:var(--shadow-lg); transform:translateY(-4px); }
+
+.cc-header {
+  padding:28px 24px 20px;
   display:flex; flex-direction:column; gap:10px;
 }
-.hv-card.tall { grid-row:span 2; justify-content:flex-end; }
-.hv-card.accent { background:linear-gradient(135deg,rgba(45,110,251,.6),rgba(0,229,201,.4)); }
-.hv-icon { font-size:2rem; }
-.hv-label { font-family:'Nunito',sans-serif; font-weight:800; color:#fff; font-size:1rem; }
-.hv-sub { font-size:.8rem; color:rgba(255,255,255,.55); }
-.hv-big { font-family:'Nunito',sans-serif; font-weight:900; font-size:2.8rem; color:var(--mint); line-height:1; }
+.cc-header.blue  { background:linear-gradient(135deg,#1A73E8,#1557B0); }
+.cc-header.teal  { background:linear-gradient(135deg,#00897B,#00695C); }
+.cc-header.orange{ background:linear-gradient(135deg,#E8710A,#BF4F0A); }
+
+.cc-icon { font-size:2.4rem; }
+.cc-age {
+  display:inline-block; background:rgba(255,255,255,.2);
+  color:#fff; font-size:.72rem; font-weight:500;
+  padding:3px 12px; border-radius:var(--r-pill);
+  font-family:'Google Sans', sans-serif;
+  align-self:flex-start;
+}
+.cc-header h3 { font-family:'Google Sans', sans-serif; font-weight:700; font-size:1.15rem; color:#fff; }
+.cc-header p { font-size:.82rem; color:rgba(255,255,255,.75); line-height:1.55; }
+
+.cc-body {
+  background:var(--gs-white); padding:20px 24px 24px;
+  flex:1; display:flex; flex-direction:column; gap:14px;
+}
+.cc-list { list-style:none; display:flex; flex-direction:column; gap:7px; }
+.cc-list li {
+  display:flex; align-items:flex-start; gap:8px;
+  font-size:.85rem; color:var(--gs-muted);
+}
+.cc-list li::before {
+  content:'✓'; flex-shrink:0; width:18px; height:18px;
+  background:var(--gs-teal-lt); color:var(--gs-teal);
+  border-radius:50%; display:grid; place-items:center; font-size:.6rem; font-weight:700;
+  margin-top:1px;
+}
+.cc-cta {
+  margin-top:auto;
+  display:block; text-align:center;
+  background:var(--gs-blue); color:#fff;
+  font-family:'Google Sans', sans-serif; font-weight:500; font-size:.88rem;
+  padding:10px; border-radius:var(--r-md);
+  transition:background .2s;
+}
+.cc-cta:hover { background:var(--gs-blue2); }
+.cc-cta.teal  { background:var(--gs-teal); }
+.cc-cta.teal:hover { background:#00695C; }
+.cc-cta.orange { background:var(--gs-orange); }
+.cc-cta.orange:hover { background:#BF4F0A; }
 
 /* ═══════════════════════════════════════════════════════
-   PAIN POINTS
+   ROADMAP
 ═══════════════════════════════════════════════════════ */
-.pain {
-  padding:96px 0;
-  background:var(--white);
-}
-.pain-grid {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;
-}
-.pain-card {
-  background:var(--grey); border-radius:var(--r-card);
-  padding:28px 24px;
-  border-left:4px solid var(--coral);
-  display:flex; flex-direction:column; gap:10px;
-}
-.pain-card .pc-icon { font-size:1.8rem; }
-.pain-card h3 { font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem; color:var(--text); }
-.pain-card p { font-size:.88rem; color:var(--muted); line-height:1.6; }
+.roadmap { padding:80px 0; background:var(--gs-grey1); }
 
-/* ═══════════════════════════════════════════════════════
-   BENEFITS
-═══════════════════════════════════════════════════════ */
-.benefits { padding:96px 0; background:var(--cream); }
-.benefits-grid {
-  display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+.roadmap-steps {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+  position:relative; margin-top:12px;
 }
-.benefit-card {
-  background:var(--white); border-radius:24px; padding:36px 28px;
-  box-shadow:var(--shadow);
-  display:flex; flex-direction:column; gap:14px;
-  border-top:4px solid transparent;
-  transition:transform .3s;
-}
-.benefit-card:hover { transform:translateY(-6px); }
-.benefit-card.bc-blue  { border-top-color:var(--blue); }
-.benefit-card.bc-mint  { border-top-color:var(--mint); }
-.benefit-card.bc-coral { border-top-color:var(--coral); }
-.benefit-card .bc-icon { font-size:2.4rem; }
-.benefit-card h3 { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; }
-.benefit-card p { font-size:.9rem; color:var(--muted); line-height:1.7; }
-.benefit-card ul { padding-left:16px; display:flex; flex-direction:column; gap:6px; }
-.benefit-card li { font-size:.88rem; color:var(--muted); }
-
-/* ═══════════════════════════════════════════════════════
-   ROADMAP (circuit path — signature element)
-═══════════════════════════════════════════════════════ */
-.roadmap { padding:96px 0; background:var(--navy); overflow:hidden; position:relative; }
-.roadmap::before {
-  content:''; position:absolute; inset:0;
-  background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);
-  background-size:28px 28px;
-}
-.roadmap .section-head h2 { color:#fff; }
-.roadmap .section-head p  { color:rgba(255,255,255,.5); }
-
-.circuit {
-  position:relative; max-width:880px; margin:auto;
-  display:flex; flex-direction:column; gap:0;
+/* connector line */
+.roadmap-steps::before {
+  content:'';
+  position:absolute; top:28px; left:calc(12.5% + 12px); right:calc(12.5% + 12px);
+  height:2px; background:var(--gs-grey2); z-index:0;
 }
 
-/* vertical spine */
-.circuit::before {
-  content:''; position:absolute;
-  left:50%; top:20px; bottom:20px;
-  width:2px;
-  background:linear-gradient(to bottom, var(--blue), var(--mint));
-  transform:translateX(-50%);
-  z-index:0;
+.step-col {
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center; padding:0 12px; position:relative; z-index:1;
 }
+.step-dot {
+  width:56px; height:56px; border-radius:50%;
+  background:var(--gs-white); border:3px solid var(--gs-grey2);
+  display:grid; place-items:center; font-size:1.4rem;
+  box-shadow:var(--shadow-sm);
+  transition:border-color .3s, box-shadow .3s;
+  flex-shrink:0;
+}
+.step-col:hover .step-dot {
+  border-color:var(--gs-blue);
+  box-shadow:0 0 0 6px rgba(26,115,232,.12);
+}
+.step-col.active .step-dot {
+  border-color:var(--gs-teal); background:var(--gs-teal-lt);
+}
+.step-num {
+  font-family:'Google Sans', sans-serif; font-weight:700; font-size:.7rem;
+  color:var(--gs-blue); background:rgba(26,115,232,.1);
+  padding:2px 8px; border-radius:var(--r-pill); margin-top:10px;
+}
+.step-col h4 { font-family:'Google Sans', sans-serif; font-weight:700; font-size:.9rem; color:var(--gs-navy); margin-top:6px; }
+.step-col p  { font-size:.78rem; color:var(--gs-muted); margin-top:4px; line-height:1.5; }
 
-.circuit-row {
-  display:grid; grid-template-columns:1fr 60px 1fr;
-  align-items:center; gap:0;
-  position:relative; z-index:1;
+/* row 2 of roadmap */
+.roadmap-steps-2 {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+  position:relative; margin-top:32px;
+  max-width:75%; margin-inline:auto;
 }
-/* node in center column */
-.c-node {
-  width:48px; height:48px; border-radius:50%;
-  background:var(--navy); border:3px solid var(--blue);
-  display:grid; place-items:center; font-size:1.1rem;
-  margin:auto; position:relative;
-  box-shadow:0 0 0 6px rgba(45,110,251,.15);
-  transition:box-shadow .3s;
-}
-.circuit-row:hover .c-node {
-  box-shadow:0 0 0 10px rgba(45,110,251,.25);
-  border-color:var(--mint);
-}
-.c-node.active { border-color:var(--mint); background:rgba(0,229,201,.12); }
-
-.c-card {
-  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
-  border-radius:16px; padding:20px 22px; margin:10px 0;
-  backdrop-filter:blur(8px);
-}
-.c-card.right { text-align:right; }
-.c-card h4 { font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem; color:#fff; }
-.c-card p  { font-size:.8rem; color:rgba(255,255,255,.5); margin-top:4px; }
-.c-empty { /* placeholder for alternating layout */ }
-
-.c-badge {
-  display:inline-block; font-size:.7rem; font-weight:700; font-family:'Nunito',sans-serif;
-  padding:3px 10px; border-radius:var(--r-pill);
-  background:rgba(45,110,251,.25); color:var(--mint); margin-bottom:6px;
+.roadmap-steps-2::before {
+  content:'';
+  position:absolute; top:28px; left:calc(16.67% + 12px); right:calc(16.67% + 12px);
+  height:2px; background:var(--gs-grey2); z-index:0;
 }
 
 /* ═══════════════════════════════════════════════════════
-   PROJECTS
+   STATS
 ═══════════════════════════════════════════════════════ */
-.projects { padding:96px 0; background:var(--white); }
-.projects-grid {
-  display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
+.stats { padding:80px 0; background:var(--gs-blue); }
+.stats .section-head h2 { color:#fff; }
+.stats .section-head p  { color:rgba(255,255,255,.7); }
+.stats-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
 }
-.project-card {
-  border-radius:20px; padding:36px;
-  display:flex; align-items:center; gap:20px;
-  background:var(--grey);
-  transition:transform .3s, box-shadow .3s;
+.stat-item {
+  background:rgba(255,255,255,.12); border-radius:var(--r-lg);
+  padding:28px 20px; text-align:center;
+  border:1px solid rgba(255,255,255,.15);
+  transition:background .2s;
 }
-.project-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
-.project-card.featured { grid-column:span 2; background:linear-gradient(135deg,var(--navy),#162068); color:#fff; }
-.proj-icon { font-size:2.8rem; flex-shrink:0; }
-.proj-info h3 { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.1rem; }
-.proj-info p  { font-size:.88rem; margin-top:4px; opacity:.65; }
-.project-card.featured .proj-info p { color:rgba(255,255,255,.65); }
-.proj-tags { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
-.proj-tag {
-  font-size:.72rem; font-weight:700; font-family:'Nunito',sans-serif;
-  padding:3px 10px; border-radius:var(--r-pill);
-  background:rgba(45,110,251,.15); color:var(--blue);
+.stat-item:hover { background:rgba(255,255,255,.18); }
+.stat-item .s-icon { font-size:2rem; margin-bottom:8px; }
+.stat-item .s-num {
+  font-family:'Google Sans', sans-serif; font-weight:700;
+  font-size:2.4rem; color:#fff; line-height:1; display:block;
 }
-.project-card.featured .proj-tag { background:rgba(0,229,201,.2); color:var(--mint); }
-
-/* ═══════════════════════════════════════════════════════
-   STATS BENTO
-═══════════════════════════════════════════════════════ */
-.stats { padding:96px 0; background:var(--cream); }
-.stats-bento {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  grid-template-rows:auto auto;
-  gap:16px;
-}
-.stat-card {
-  background:var(--white); border-radius:20px; padding:32px 24px;
-  box-shadow:var(--shadow);
-  display:flex; flex-direction:column; gap:6px;
-}
-.stat-card.big { grid-column:span 2; background:linear-gradient(135deg,var(--blue),var(--blue2)); color:#fff; flex-direction:row; align-items:center; gap:24px; }
-.stat-card .s-num { font-family:'Nunito',sans-serif; font-weight:900; font-size:3rem; color:var(--blue); line-height:1; }
-.stat-card.big .s-num { font-size:3.8rem; color:#fff; }
-.stat-card .s-label { font-size:.9rem; color:var(--muted); font-weight:500; }
-.stat-card.big .s-label { color:rgba(255,255,255,.75); font-size:1rem; }
-.stat-card.big .s-icon { font-size:3rem; }
+.stat-item .s-lbl { font-size:.85rem; color:rgba(255,255,255,.7); margin-top:6px; }
 
 /* ═══════════════════════════════════════════════════════
    TESTIMONIALS
 ═══════════════════════════════════════════════════════ */
-.testimonials { padding:96px 0; background:var(--navy); }
-.testimonials .section-head h2 { color:#fff; }
-.testimonials .section-head p  { color:rgba(255,255,255,.5); }
-
-.testi-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.testi { padding:80px 0; background:var(--gs-white); }
+.testi-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
 .testi-card {
-  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
-  border-radius:20px; padding:32px;
+  background:var(--gs-grey1); border-radius:var(--r-xl); padding:28px;
+  border:1px solid var(--gs-grey2);
+  display:flex; flex-direction:column; gap:14px;
+  transition:box-shadow .2s;
 }
-.testi-stars { color:var(--mint); font-size:1rem; letter-spacing:2px; margin-bottom:14px; }
-.testi-quote { font-size:.97rem; color:rgba(255,255,255,.8); line-height:1.75; }
-.testi-author { margin-top:20px; display:flex; align-items:center; gap:12px; }
-.testi-avatar {
-  width:42px; height:42px; border-radius:50%;
-  background:linear-gradient(135deg,var(--blue),var(--mint));
-  display:grid; place-items:center; font-weight:800; font-size:.9rem; color:#fff;
-  flex-shrink:0;
+.testi-card:hover { box-shadow:var(--shadow-md); }
+.testi-stars { color:#F9AB00; font-size:.95rem; letter-spacing:2px; }/* Google Yellow */
+.testi-quote {
+  font-size:.92rem; color:var(--gs-text); line-height:1.75;
+  font-style:italic;
 }
-.testi-name { font-family:'Nunito',sans-serif; font-weight:700; color:#fff; font-size:.9rem; }
-.testi-role { font-size:.78rem; color:rgba(255,255,255,.45); }
+.testi-quote::before { content:'"'; font-size:1.5rem; color:var(--gs-blue); font-style:normal; line-height:0; vertical-align:-0.4em; margin-right:2px; }
+.testi-author { display:flex; align-items:center; gap:12px; margin-top:auto; }
+.testi-av {
+  width:40px; height:40px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--gs-blue),var(--gs-teal));
+  display:grid; place-items:center; color:#fff; font-weight:700; font-size:.9rem;
+}
+.testi-name { font-family:'Google Sans', sans-serif; font-weight:700; font-size:.88rem; color:var(--gs-navy); }
+.testi-role { font-size:.75rem; color:var(--gs-muted); }
 
 /* ═══════════════════════════════════════════════════════
    TEACHER
 ═══════════════════════════════════════════════════════ */
-.teacher { padding:96px 0; background:var(--white); }
+.teacher { padding:80px 0; background:var(--gs-grey1); }
 .teacher-inner {
-  display:grid; grid-template-columns:340px 1fr; gap:60px; align-items:center;
+  display:grid; grid-template-columns:280px 1fr; gap:56px; align-items:center;
 }
-.teacher-visual {
-  position:relative;
+.teacher-card {
+  background:var(--gs-white); border-radius:var(--r-xl);
+  padding:32px 24px; text-align:center;
+  box-shadow:var(--shadow-md);
+  display:flex; flex-direction:column; align-items:center; gap:12px;
 }
-.teacher-avatar-wrap {
-  width:280px; height:280px; margin:auto;
-  border-radius:32px;
-  background:linear-gradient(135deg,var(--navy) 0%,#1a2a6c 100%);
-  display:grid; place-items:center; font-size:6rem;
-  position:relative; overflow:hidden;
+.teacher-avatar {
+  width:100px; height:100px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gs-blue),var(--gs-teal));
+  display:grid; place-items:center; font-size:3rem;
+  margin-bottom:4px;
 }
-.teacher-avatar-wrap::before {
-  content:'';
-  position:absolute; inset:0;
-  background:linear-gradient(135deg,rgba(45,110,251,.4),rgba(0,229,201,.2));
+.teacher-name { font-family:'Google Sans', sans-serif; font-weight:700; font-size:1rem; color:var(--gs-navy); }
+.teacher-title { font-size:.8rem; color:var(--gs-blue); font-weight:500; }
+.teacher-rating {
+  background:var(--gs-teal-lt); border-radius:var(--r-pill);
+  padding:5px 14px; font-size:.8rem; font-weight:700; color:var(--gs-teal);
 }
-.ta-badge {
-  position:absolute; bottom:-12px; right:-12px;
-  background:var(--mint); border-radius:14px; padding:10px 16px;
-  font-family:'Nunito',sans-serif; font-weight:800; font-size:.82rem;
-  color:var(--navy); box-shadow:0 8px 24px rgba(0,229,201,.3);
+.teacher-skills { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:4px; }
+.ts-pill {
+  font-size:.72rem; font-weight:500;
+  background:var(--gs-grey1); color:var(--gs-muted);
+  padding:4px 10px; border-radius:var(--r-pill);
+  border:1px solid var(--gs-grey2);
 }
-.teacher-text h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:2rem; color:var(--navy); }
-.teacher-text .teacher-title { color:var(--blue); font-weight:600; font-size:.95rem; margin:6px 0 20px; }
-.teacher-text p { color:var(--muted); line-height:1.75; font-size:.95rem; }
-.teacher-skills { display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
-.teacher-skill {
-  background:var(--grey); border-radius:var(--r-pill);
-  padding:7px 18px; font-size:.85rem; font-weight:600; color:var(--text);
-  border:1px solid rgba(45,110,251,.15);
-}
+
+.teacher-bio h2 { font-family:'Google Sans', sans-serif; font-weight:700; font-size:1.75rem; color:var(--gs-navy); }
+.teacher-bio .t-role { color:var(--gs-blue); font-weight:500; font-size:.9rem; margin:6px 0 18px; }
+.teacher-bio p { font-size:.9rem; color:var(--gs-muted); line-height:1.75; }
+.teacher-bio p+p { margin-top:10px; }
 
 /* ═══════════════════════════════════════════════════════
-   CTA / REGISTER
+   REGISTER CTA
 ═══════════════════════════════════════════════════════ */
-.cta-section {
-  padding:96px 0;
-  background:linear-gradient(135deg,var(--blue) 0%,#0A2FA8 100%);
-  position:relative; overflow:hidden;
+.register { padding:80px 0; background:var(--gs-navy); position:relative; overflow:hidden; }
+.register::before {
+  content:'';
+  position:absolute; top:-80px; right:-80px;
+  width:400px; height:400px; border-radius:50%;
+  background:rgba(26,115,232,.12);
 }
-.cta-section::before {
-  content:''; position:absolute; inset:0;
-  background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size:28px 28px;
+.register::after {
+  content:'';
+  position:absolute; bottom:-60px; left:-60px;
+  width:300px; height:300px; border-radius:50%;
+  background:rgba(0,137,123,.1);
 }
-.cta-inner {
+.register-inner {
   position:relative; z-index:1;
-  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  display:grid; grid-template-columns:1fr 400px; gap:56px; align-items:start;
 }
-.cta-text h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:2.4rem; color:#fff; line-height:1.2; }
-.cta-text p  { margin-top:16px; color:rgba(255,255,255,.7); font-size:1rem; line-height:1.7; }
-.cta-perks { margin-top:28px; display:flex; flex-direction:column; gap:10px; }
-.cta-perk { display:flex; align-items:center; gap:10px; color:rgba(255,255,255,.85); font-size:.9rem; }
-.cta-perk::before { content:'✓'; width:22px; height:22px; background:var(--mint); border-radius:50%; display:grid; place-items:center; font-size:.7rem; font-weight:900; color:var(--navy); flex-shrink:0; }
+.register-text h2 {
+  font-family:'Google Sans', sans-serif; font-weight:700;
+  font-size:clamp(1.75rem,3vw,2.2rem); color:#fff; line-height:1.25;
+}
+.register-text p { margin-top:14px; color:rgba(255,255,255,.65); font-size:.95rem; line-height:1.7; }
+.register-perks { margin-top:24px; display:flex; flex-direction:column; gap:10px; }
+.perk-item {
+  display:flex; align-items:flex-start; gap:10px;
+  color:rgba(255,255,255,.8); font-size:.88rem;
+}
+.perk-check {
+  width:20px; height:20px; border-radius:50%; flex-shrink:0;
+  background:var(--gs-teal); display:grid; place-items:center;
+  font-size:.6rem; font-weight:900; color:#fff;
+  margin-top:1px;
+}
 
+/* Form card */
 .form-card {
-  background:#fff; border-radius:24px; padding:36px;
-  box-shadow:0 32px 80px rgba(0,0,0,.2);
+  background:var(--gs-white); border-radius:var(--r-xl); padding:32px;
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
 }
-.form-card h3 { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.3rem; color:var(--navy); margin-bottom:4px; }
-.form-card .form-sub { font-size:.85rem; color:var(--muted); margin-bottom:24px; }
+.form-card h3 { font-family:'Google Sans', sans-serif; font-weight:700; font-size:1.2rem; color:var(--gs-navy); }
+.form-card .fc-sub { font-size:.82rem; color:var(--gs-muted); margin:4px 0 22px; }
+
 .form-field { margin-bottom:14px; }
-.form-field label { display:block; font-size:.8rem; font-weight:600; color:var(--text); margin-bottom:6px; }
+.form-field label { display:block; font-size:.78rem; font-weight:500; color:var(--gs-navy); margin-bottom:5px; }
 .form-field input {
-  width:100%; padding:12px 16px;
-  border:1.5px solid #E2E8F0; border-radius:12px;
-  font-family:'Inter',sans-serif; font-size:.9rem; color:var(--text);
-  transition:border-color .2s;
-  outline:none;
+  width:100%; padding:11px 14px;
+  border:1.5px solid var(--gs-grey2); border-radius:var(--r-sm);
+  font-family:'Roboto', sans-serif; font-size:.9rem; color:var(--gs-text);
+  transition:border-color .2s, box-shadow .2s; outline:none;
+  background:var(--gs-grey1);
 }
-.form-field input:focus { border-color:var(--blue); }
+.form-field input:focus {
+  border-color:var(--gs-blue);
+  box-shadow:0 0 0 3px rgba(26,115,232,.15);
+  background:var(--gs-white);
+}
 .form-submit {
   display:block; width:100%;
-  background:var(--blue); color:#fff;
-  font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem;
-  padding:14px; border-radius:var(--r-pill);
-  text-align:center; margin-top:8px;
-  box-shadow:0 6px 24px rgba(45,110,251,.4);
-  transition:opacity .2s;
+  background:var(--gs-blue); color:#fff;
+  font-family:'Google Sans', sans-serif; font-weight:500; font-size:.95rem;
+  padding:13px; border-radius:var(--r-pill); text-align:center;
+  margin-top:6px; box-shadow:0 2px 8px rgba(26,115,232,.4);
+  transition:background .2s, box-shadow .2s; cursor:pointer; border:none;
 }
-.form-submit:hover { opacity:.88; }
-.form-note { text-align:center; font-size:.75rem; color:var(--muted); margin-top:12px; }
+.form-submit:hover { background:var(--gs-blue2); box-shadow:0 4px 16px rgba(26,115,232,.4); }
+.form-note { text-align:center; font-size:.72rem; color:var(--gs-muted); margin-top:10px; }
 
 /* ═══════════════════════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════════════════════ */
 footer {
-  background:var(--navy); color:rgba(255,255,255,.5);
-  padding:48px 0 32px;
+  background:#111214; color:rgba(255,255,255,.5);
+  padding:40px 0 28px;
 }
-.footer-inner {
-  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
-  padding-bottom:28px; border-bottom:1px solid rgba(255,255,255,.08);
+.footer-top {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:32px; flex-wrap:wrap;
+  padding-bottom:24px; border-bottom:1px solid rgba(255,255,255,.08);
 }
-.footer-logo { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; color:#fff; }
-.footer-logo span { color:var(--mint); }
-.footer-links { display:flex; gap:24px; }
-.footer-links a { font-size:.85rem; transition:color .2s; }
+.footer-logo { font-family:'Google Sans', sans-serif; font-weight:700; font-size:1.1rem; color:#fff; }
+.footer-logo em { font-style:normal; color:#8AB4F8; }
+.footer-tagline { font-size:.8rem; color:rgba(255,255,255,.4); margin-top:4px; }
+.footer-links { display:flex; flex-direction:column; gap:10px; }
+.footer-links a { font-size:.83rem; transition:color .2s; }
 .footer-links a:hover { color:#fff; }
-.footer-bottom { text-align:center; padding-top:24px; font-size:.8rem; }
+.footer-links-title { font-size:.72rem; font-weight:700; color:rgba(255,255,255,.3); text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
+.footer-contact { font-size:.83rem; line-height:1.7; }
+.footer-bottom { text-align:center; padding-top:20px; font-size:.75rem; }
 
 /* ═══════════════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════════════ */
-@media (max-width:900px) {
+@media (max-width:960px) {
   .hero .container { grid-template-columns:1fr; text-align:center; }
-  .hero-visual { display:none; }
+  .hero-panel { display:none; }
+  .hero-sub { margin-inline:auto; }
   .hero-actions { justify-content:center; }
   .hero-trust { justify-content:center; }
-  .benefits-grid { grid-template-columns:1fr; }
-  .circuit::before { left:28px; }
-  .circuit-row { grid-template-columns:56px 1fr; }
-  .c-card.right { text-align:left; }
-  .c-empty { display:none; }
-  .circuit-row:nth-child(even) > .c-card { grid-column:2; grid-row:1; }
-  .projects-grid { grid-template-columns:1fr; }
-  .project-card.featured { grid-column:1; }
-  .stats-bento { grid-template-columns:1fr 1fr; }
-  .stat-card.big { grid-column:span 2; }
+  .why-grid { grid-template-columns:1fr 1fr; }
+  .courses-grid { grid-template-columns:1fr; }
+  .roadmap-steps, .roadmap-steps-2 { grid-template-columns:1fr 1fr; }
+  .roadmap-steps::before, .roadmap-steps-2::before { display:none; }
+  .roadmap-steps-2 { max-width:100%; }
+  .stats-grid { grid-template-columns:1fr 1fr; }
   .testi-grid { grid-template-columns:1fr; }
   .teacher-inner { grid-template-columns:1fr; text-align:center; }
   .teacher-skills { justify-content:center; }
-  .cta-inner { grid-template-columns:1fr; }
-  .cta-text { text-align:center; }
-  .cta-perks { align-items:center; }
-  .footer-inner { flex-direction:column; align-items:center; text-align:center; }
-  nav .nav-links { display:none; }
+  .register-inner { grid-template-columns:1fr; }
+  .register-perks { align-items:flex-start; }
+  .footer-top { flex-direction:column; }
 }
 
-@media (max-width:480px) {
-  .stats-bento { grid-template-columns:1fr; }
-  .stat-card.big { grid-column:1; }
-  .pain-grid { grid-template-columns:1fr; }
+@media (max-width:560px) {
+  .why-grid { grid-template-columns:1fr; }
+  .stats-grid { grid-template-columns:1fr 1fr; }
+  .nav-links { display:none; }
+  .roadmap-steps, .roadmap-steps-2 { grid-template-columns:1fr; }
 }
 
-/* reduced motion */
 @media (prefers-reduced-motion:reduce) {
-  .orb { animation:none; }
+  * { transition:none !important; animation:none !important; }
 }
 </style>
 </head>
 <body>
 
-<!-- ── NAV ──────────────────────────────────────────── -->
-<nav>
+<!-- ── NAV (not fixed — Google Sites compatible) ──── -->
+<nav class="site-nav">
   <div class="container">
-    <a class="nav-logo" href="#">
-      <div class="logo-dot">🚀</div>
-      Kids<span>Coding</span>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">🚀</div>
+      Kids<em>Coding</em>&nbsp;Academy
     </a>
     <ul class="nav-links">
-      <li><a href="#benefits">Khoá Học</a></li>
+      <li><a href="#courses">Khóa Học</a></li>
       <li><a href="#roadmap">Lộ Trình</a></li>
-      <li><a href="#projects">Dự Án</a></li>
       <li><a href="#teacher">Giáo Viên</a></li>
+      <li><a href="#testi">Phụ Huynh</a></li>
     </ul>
     <a href="#register" class="nav-cta">Học Thử Miễn Phí</a>
   </div>
@@ -544,130 +616,152 @@ footer {
 
 <!-- ── HERO ─────────────────────────────────────────── -->
 <section class="hero">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+  <div class="hero-geo"></div>
   <div class="container">
     <div class="hero-text">
-      <div class="eyebrow">Dành cho trẻ 7 – 16 tuổi</div>
-      <h1>Học Lập Trình & Tiếng Anh<br>Trong <em>Thời Đại AI</em></h1>
-      <p>Phát triển tư duy logic, sáng tạo và kỹ năng công nghệ từ sớm — thông qua các dự án thực tế được xây dựng bởi chính các em.</p>
+      <div class="hero-eyebrow">Dành cho trẻ 7 – 16 tuổi · Dĩ An, Bình Dương</div>
+      <h1>
+        Nơi Ươm Mầm Công Nghệ<br>
+        <strong>Cho Thế Hệ Tương Lai</strong>
+      </h1>
+      <p class="hero-sub">Lập trình, Tiếng Anh và Tư duy AI — ba kỹ năng thiết yếu được tích hợp vào từng dự án thực tế. Trẻ học bằng cách <em>làm</em>, không chỉ bằng cách nghe.</p>
       <div class="hero-actions">
-        <a href="#register" class="btn-primary">
-          Đăng Ký Học Thử
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="#roadmap" class="btn-ghost" style="color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.3)">Xem Lộ Trình</a>
+        <a href="#register" class="btn-filled">Khám Phá Khóa Học →</a>
+        <a href="#courses" class="btn-outlined btn-outlined--white">Xem Lộ Trình</a>
       </div>
       <div class="hero-trust">
-        <div class="trust-avatars">
-          <span>A</span><span>B</span><span>C</span><span>D</span><span>+</span>
+        <div class="trust-faces">
+          <div class="trust-face">A</div>
+          <div class="trust-face">B</div>
+          <div class="trust-face">C</div>
+          <div class="trust-face">+</div>
         </div>
-        <div class="trust-text">
-          <strong>300+ học sinh</strong>
-          đang học tại Kids Coding Academy
+        <div class="trust-copy">
+          <strong>300+ học sinh đang học</strong>
+          tại Kids Coding Academy
         </div>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="hv-card tall accent">
-        <div class="hv-icon">🤖</div>
-        <div>
-          <div class="hv-label">AI Chatbot</div>
-          <div class="hv-sub">Dự án học sinh lớp 6</div>
-        </div>
+    <div class="hero-panel">
+      <div class="hp-card accent span2">
+        <div class="hp-icon">🤖</div>
+        <div class="hp-name">AI Chatbot — Dự án học sinh lớp 7</div>
+        <div class="hp-label">Nhận diện lỗi ngữ pháp tiếng Anh tự động</div>
       </div>
-      <div class="hv-card">
-        <div class="hv-icon">📊</div>
-        <div class="hv-big">95%</div>
-        <div class="hv-sub">Phụ huynh hài lòng</div>
+      <div class="hp-card">
+        <div class="hp-icon">📊</div>
+        <div class="hp-num">95%</div>
+        <div class="hp-label">Phụ huynh hài lòng</div>
       </div>
-      <div class="hv-card">
-        <div class="hv-icon">🎮</div>
-        <div class="hv-label">Game Scratch</div>
-        <div class="hv-sub">Tự làm sau 8 buổi</div>
-      </div>
-      <div class="hv-card">
-        <div class="hv-icon">🌐</div>
-        <div class="hv-big">100+</div>
-        <div class="hv-sub">Dự án hoàn thành</div>
+      <div class="hp-card">
+        <div class="hp-icon">🎮</div>
+        <div class="hp-num">100+</div>
+        <div class="hp-label">Dự án hoàn thành</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── PAIN POINTS ──────────────────────────────────── -->
-<section class="pain">
+<!-- ── WHY CHOOSE US ────────────────────────────────── -->
+<section class="why">
   <div class="container">
     <div class="section-head">
-      <div class="tag tag--coral">Vấn Đề Phụ Huynh Lo Lắng</div>
-      <h2>Những Dấu Hiệu Cần Chú Ý</h2>
-      <p>Nếu bạn đang thấy những điều này ở con — chúng tôi có giải pháp.</p>
+      <div class="chip">Tại Sao Chọn Chúng Tôi</div>
+      <h2>Giá Trị Cốt Lõi</h2>
+      <p>Bốn lý do phụ huynh tin tưởng gửi con đến Kids Coding Academy.</p>
     </div>
-    <div class="pain-grid">
-      <div class="pain-card">
-        <div class="pc-icon">🎮</div>
-        <h3>Dùng máy tính chỉ để chơi game</h3>
-        <p>Con tiêu hàng giờ trước màn hình nhưng không tạo ra bất kỳ sản phẩm có giá trị nào.</p>
+    <div class="why-grid">
+      <div class="why-card wc-blue">
+        <div class="why-icon">🔨</div>
+        <h3>Học Qua Dự Án Thực Tế</h3>
+        <p>Mỗi buổi học đều tạo ra sản phẩm — game, app hoặc website — không phải bài tập lý thuyết.</p>
       </div>
-      <div class="pain-card">
-        <div class="pc-icon">🇬🇧</div>
-        <h3>Ngại giao tiếp tiếng Anh</h3>
-        <p>Học từ vựng nhiều nhưng đến lúc cần dùng thực tế lại lúng túng, thiếu tự tin.</p>
+      <div class="why-card wc-teal">
+        <div class="why-icon">❤️</div>
+        <h3>Giáo Viên Tận Tâm</h3>
+        <p>Thầy Tú — chuyên gia STEM với nhiều năm kinh nghiệm — quan tâm đến từng học sinh.</p>
       </div>
-      <div class="pain-card">
-        <div class="pc-icon">🧠</div>
-        <h3>Thiếu tư duy logic & sáng tạo</h3>
-        <p>Gặp khó khăn với bài toán phân tích, lập kế hoạch hay đưa ra giải pháp sáng tạo.</p>
+      <div class="why-card wc-orange">
+        <div class="why-icon">🌍</div>
+        <h3>Giáo Trình Chuẩn Quốc Tế</h3>
+        <p>Chương trình theo chuẩn STEAM quốc tế, kết hợp lập trình và tiếng Anh giao tiếp.</p>
       </div>
-      <div class="pain-card">
-        <div class="pc-icon">🤖</div>
-        <h3>Chưa biết sử dụng AI hiệu quả</h3>
-        <p>Thế giới đang thay đổi nhanh chóng — trẻ cần học cách làm chủ AI, không phải bị thay thế.</p>
+      <div class="why-card wc-green">
+        <div class="why-icon">🤖</div>
+        <h3>Làm Chủ Công Nghệ AI</h3>
+        <p>Trẻ học cách sử dụng AI như một công cụ sáng tạo — không bị AI thay thế.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── BENEFITS ─────────────────────────────────────── -->
-<section class="benefits" id="benefits">
+<!-- ── FEATURED COURSES ──────────────────────────────── -->
+<section class="courses" id="courses">
   <div class="container">
     <div class="section-head">
-      <div class="tag">Chương Trình Học</div>
-      <h2>Chúng Tôi Giúp Trẻ Phát Triển</h2>
-      <p>Ba trụ cột kỹ năng tích hợp, học thông qua làm — không phải chỉ đọc lý thuyết.</p>
+      <div class="chip chip--teal">Khóa Học Nổi Bật</div>
+      <h2>Ba Trụ Cột Kỹ Năng</h2>
+      <p>Học thông qua làm — không phải chỉ đọc lý thuyết. Mỗi khóa kết thúc bằng một sản phẩm thật.</p>
     </div>
-    <div class="benefits-grid">
-      <div class="benefit-card bc-blue">
-        <div class="bc-icon">💻</div>
-        <h3>Lập Trình & Công Nghệ</h3>
-        <p>Từ Scratch cơ bản đến Python và AI — học sinh xây dựng sản phẩm thực tế, có thể demo ngay.</p>
-        <ul>
-          <li>Scratch, Python, Web Development</li>
-          <li>App Inventor, CoSpaces, AI Coding</li>
-          <li>Tư duy thuật toán & giải quyết vấn đề</li>
-        </ul>
+    <div class="courses-grid">
+
+      <!-- Course 1 -->
+      <div class="course-card">
+        <div class="cc-header blue">
+          <div class="cc-icon">💻</div>
+          <div class="cc-age">Độ tuổi: 7 – 16 tuổi</div>
+          <h3>Lập Trình & Công Nghệ</h3>
+          <p>Từ Scratch cơ bản đến Python và AI — xây dựng sản phẩm thực tế, có thể demo ngay.</p>
+        </div>
+        <div class="cc-body">
+          <ul class="cc-list">
+            <li>Scratch — tư duy lập trình trực quan</li>
+            <li>Python — ngôn ngữ lập trình văn bản</li>
+            <li>AI Coding — chatbot, nhận diện hình ảnh</li>
+            <li>Web Development — HTML, CSS, JavaScript</li>
+          </ul>
+          <a href="#register" class="cc-cta">Đăng ký học thử →</a>
+        </div>
       </div>
-      <div class="benefit-card bc-mint">
-        <div class="bc-icon">🇬🇧</div>
-        <h3>Tiếng Anh Giao Tiếp</h3>
-        <p>Phản xạ tự nhiên, không gượng gạo — tiếng Anh được lồng ghép vào từng bài học lập trình.</p>
-        <ul>
-          <li>Giao tiếp qua tình huống thực tế</li>
-          <li>Từ vựng kỹ thuật trong ngữ cảnh</li>
-          <li>Tự tin trình bày dự án bằng tiếng Anh</li>
-        </ul>
+
+      <!-- Course 2 -->
+      <div class="course-card">
+        <div class="cc-header teal">
+          <div class="cc-icon">🇬🇧</div>
+          <div class="cc-age">Độ tuổi: 7 – 16 tuổi</div>
+          <h3>Tiếng Anh Giao Tiếp</h3>
+          <p>Phản xạ tự nhiên — tiếng Anh được lồng ghép vào từng bài học lập trình.</p>
+        </div>
+        <div class="cc-body">
+          <ul class="cc-list">
+            <li>Giao tiếp qua tình huống thực tế</li>
+            <li>Từ vựng kỹ thuật trong ngữ cảnh</li>
+            <li>Tự tin trình bày dự án bằng tiếng Anh</li>
+            <li>Không gượng gạo, không học vẹt</li>
+          </ul>
+          <a href="#register" class="cc-cta teal">Đăng ký học thử →</a>
+        </div>
       </div>
-      <div class="benefit-card bc-coral">
-        <div class="bc-icon">🚀</div>
-        <h3>Dự Án Thực Tế</h3>
-        <p>Mỗi khoá học kết thúc bằng một sản phẩm thật — game, app, website hoặc AI chatbot.</p>
-        <ul>
-          <li>Portfolio sản phẩm từ lớp 2</li>
-          <li>Demo day cuối mỗi khoá</li>
-          <li>Chia sẻ và nhận feedback thực tế</li>
-        </ul>
+
+      <!-- Course 3 -->
+      <div class="course-card">
+        <div class="cc-header orange">
+          <div class="cc-icon">🧒</div>
+          <div class="cc-age">Độ tuổi: 7 – 10 tuổi</div>
+          <h3>Tin Học Thiếu Nhi</h3>
+          <p>Dành cho bé bắt đầu — làm quen máy tính, tư duy logic và sáng tạo số.</p>
+        </div>
+        <div class="cc-body">
+          <ul class="cc-list">
+            <li>Kỹ năng sử dụng máy tính cơ bản</li>
+            <li>Scratch Jr — lập trình kéo thả vui nhộn</li>
+            <li>CoSpaces — thực tế ảo 3D tương tác</li>
+            <li>Tư duy sáng tạo qua trò chơi</li>
+          </ul>
+          <a href="#register" class="cc-cta orange">Đăng ký học thử →</a>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -676,185 +770,107 @@ footer {
 <section class="roadmap" id="roadmap">
   <div class="container">
     <div class="section-head">
-      <div class="tag tag--mint">Lộ Trình 7 Cấp Độ</div>
+      <div class="chip chip--teal">Lộ Trình 7 Cấp Độ</div>
       <h2>Từ Người Mới Đến Chuyên Gia</h2>
-      <p>Mỗi bước được thiết kế để xây dựng nền tảng vững chắc trước khi tiến lên cấp độ tiếp theo.</p>
+      <p>Mỗi bước xây dựng nền tảng vững chắc trước khi tiến lên cấp độ tiếp theo.</p>
     </div>
 
-    <div class="circuit">
-
-      <div class="circuit-row">
-        <div class="c-card">
-          <div class="c-badge">Cấp 1</div>
-          <h4>Scratch Beginner</h4>
-          <p>Tư duy khối lệnh, nhân vật, câu chuyện</p>
-        </div>
-        <div class="c-node">🎨</div>
-        <div class="c-empty"></div>
+    <div class="roadmap-steps">
+      <div class="step-col">
+        <div class="step-dot">🎨</div>
+        <div class="step-num">Cấp 1</div>
+        <h4>Scratch Cơ Bản</h4>
+        <p>Tư duy khối lệnh, nhân vật, câu chuyện</p>
       </div>
-
-      <div class="circuit-row">
-        <div class="c-empty"></div>
-        <div class="c-node active">⚙️</div>
-        <div class="c-card right">
-          <div class="c-badge">Cấp 2</div>
-          <h4>Scratch Advanced</h4>
-          <p>Game mechanics, điểm số, level design</p>
-        </div>
+      <div class="step-col active">
+        <div class="step-dot">⚙️</div>
+        <div class="step-num">Cấp 2</div>
+        <h4>Scratch Nâng Cao</h4>
+        <p>Game mechanics, điểm số, level design</p>
       </div>
-
-      <div class="circuit-row">
-        <div class="c-card">
-          <div class="c-badge">Cấp 3</div>
-          <h4>CoSpaces</h4>
-          <p>Thực tế ảo 3D, môi trường tương tác</p>
-        </div>
-        <div class="c-node">🥽</div>
-        <div class="c-empty"></div>
+      <div class="step-col">
+        <div class="step-dot">🥽</div>
+        <div class="step-num">Cấp 3</div>
+        <h4>CoSpaces 3D</h4>
+        <p>Thực tế ảo 3D, môi trường tương tác</p>
       </div>
-
-      <div class="circuit-row">
-        <div class="c-empty"></div>
-        <div class="c-node">📱</div>
-        <div class="c-card right">
-          <div class="c-badge">Cấp 4</div>
-          <h4>App Inventor</h4>
-          <p>Lập trình app Android chạy trên điện thoại thật</p>
-        </div>
+      <div class="step-col">
+        <div class="step-dot">📱</div>
+        <div class="step-num">Cấp 4</div>
+        <h4>App Inventor</h4>
+        <p>Lập trình app Android chạy điện thoại thật</p>
       </div>
-
-      <div class="circuit-row">
-        <div class="c-card">
-          <div class="c-badge">Cấp 5</div>
-          <h4>Python</h4>
-          <p>Ngôn ngữ lập trình văn bản, logic phức tạp</p>
-        </div>
-        <div class="c-node">🐍</div>
-        <div class="c-empty"></div>
-      </div>
-
-      <div class="circuit-row">
-        <div class="c-empty"></div>
-        <div class="c-node">🤖</div>
-        <div class="c-card right">
-          <div class="c-badge">Cấp 6</div>
-          <h4>AI Coding</h4>
-          <p>Xây dựng model AI, chatbot, image recognition</p>
-        </div>
-      </div>
-
-      <div class="circuit-row">
-        <div class="c-card">
-          <div class="c-badge">Cấp 7</div>
-          <h4>Web Development</h4>
-          <p>HTML, CSS, JavaScript — website hoàn chỉnh</p>
-        </div>
-        <div class="c-node">🌐</div>
-        <div class="c-empty"></div>
-      </div>
-
     </div>
-  </div>
-</section>
 
-<!-- ── PROJECTS ──────────────────────────────────────── -->
-<section class="projects" id="projects">
-  <div class="container">
-    <div class="section-head">
-      <div class="tag">Dự Án Học Sinh</div>
-      <h2>Sản Phẩm Thực Tế</h2>
-      <p>Không phải bài tập — đây là những sản phẩm thật được xây dựng bởi chính học sinh.</p>
-    </div>
-    <div class="projects-grid">
-      <div class="project-card featured">
-        <div class="proj-icon">🤖</div>
-        <div class="proj-info">
-          <h3>AI Chatbot — Dự án nổi bật</h3>
-          <p>Học sinh lớp 7 tự xây dựng chatbot hỗ trợ học tiếng Anh, có thể nhận diện lỗi ngữ pháp và gợi ý sửa lỗi tự động.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">Python</span>
-            <span class="proj-tag">AI API</span>
-            <span class="proj-tag">NLP</span>
-          </div>
-        </div>
+    <div class="roadmap-steps-2">
+      <div class="step-col">
+        <div class="step-dot">🐍</div>
+        <div class="step-num">Cấp 5</div>
+        <h4>Python</h4>
+        <p>Ngôn ngữ lập trình văn bản, logic phức tạp</p>
       </div>
-      <div class="project-card">
-        <div class="proj-icon">🎮</div>
-        <div class="proj-info">
-          <h3>Game Scratch</h3>
-          <p>Platform game có nhiều màn chơi, hệ thống điểm và âm thanh.</p>
-          <div class="proj-tags"><span class="proj-tag">Scratch</span></div>
-        </div>
+      <div class="step-col">
+        <div class="step-dot">🤖</div>
+        <div class="step-num">Cấp 6</div>
+        <h4>AI Coding</h4>
+        <p>Model AI, chatbot, image recognition</p>
       </div>
-      <div class="project-card">
-        <div class="proj-icon">🌐</div>
-        <div class="proj-info">
-          <h3>Website Cá Nhân</h3>
-          <p>Portfolio học sinh với thiết kế responsive, domain riêng.</p>
-          <div class="proj-tags"><span class="proj-tag">HTML</span><span class="proj-tag">CSS</span></div>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="proj-icon">📱</div>
-        <div class="proj-info">
-          <h3>Mobile App</h3>
-          <p>App Android chạy trực tiếp trên điện thoại của học sinh.</p>
-          <div class="proj-tags"><span class="proj-tag">App Inventor</span></div>
-        </div>
+      <div class="step-col">
+        <div class="step-dot">🌐</div>
+        <div class="step-num">Cấp 7</div>
+        <h4>Web Dev</h4>
+        <p>HTML, CSS, JS — website hoàn chỉnh</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── STATS BENTO ───────────────────────────────────── -->
+<!-- ── STATS ─────────────────────────────────────────── -->
 <section class="stats">
   <div class="container">
     <div class="section-head">
-      <div class="tag">Con Số Thực Tế</div>
+      <div class="chip chip--green" style="border-color:rgba(255,255,255,.5);color:#fff;">Con Số Thực Tế</div>
       <h2>Kết Quả Nói Lên Tất Cả</h2>
     </div>
-    <div class="stats-bento">
-      <div class="stat-card big">
+    <div class="stats-grid">
+      <div class="stat-item">
         <div class="s-icon">👩‍💻</div>
-        <div>
-          <div class="s-num">300+</div>
-          <div class="s-label">Học sinh đã và đang theo học tại Kids Coding Academy</div>
-        </div>
+        <span class="s-num">300+</span>
+        <div class="s-lbl">Học sinh đang theo học</div>
       </div>
-      <div class="stat-card">
-        <div class="s-num">100+</div>
-        <div class="s-label">Dự án hoàn thành</div>
+      <div class="stat-item">
+        <div class="s-icon">✅</div>
+        <span class="s-num">100+</span>
+        <div class="s-lbl">Dự án hoàn thành</div>
       </div>
-      <div class="stat-card">
-        <div class="s-num">95%</div>
-        <div class="s-label">Phụ huynh hài lòng</div>
+      <div class="stat-item">
+        <div class="s-icon">😊</div>
+        <span class="s-num">95%</span>
+        <div class="s-lbl">Phụ huynh hài lòng</div>
       </div>
-      <div class="stat-card">
-        <div class="s-num">50+</div>
-        <div class="s-label">Học sinh cấp độ nâng cao</div>
-      </div>
-      <div class="stat-card">
-        <div class="s-num">7</div>
-        <div class="s-label">Cấp độ lộ trình học</div>
+      <div class="stat-item">
+        <div class="s-icon">🏆</div>
+        <span class="s-num">50+</span>
+        <div class="s-lbl">Học sinh cấp độ nâng cao</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ── TESTIMONIALS ──────────────────────────────────── -->
-<section class="testimonials">
+<section class="testi" id="testi">
   <div class="container">
     <div class="section-head">
-      <div class="tag tag--mint">Phụ Huynh Nói Gì</div>
+      <div class="chip chip--teal">Phụ Huynh Nói Gì</div>
       <h2>Cảm Nhận Thực Tế</h2>
-      <p>Từ những phụ huynh đã đồng hành cùng chúng tôi.</p>
+      <p>Từ những phụ huynh đã đồng hành cùng Kids Coding Academy.</p>
     </div>
     <div class="testi-grid">
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
         <div class="testi-quote">Con rất thích lớp học và luôn mong tới buổi học tiếp theo. Trước đây con chỉ chơi game, giờ con đang làm game — đó là sự khác biệt rất lớn với tôi.</div>
         <div class="testi-author">
-          <div class="testi-avatar">M</div>
+          <div class="testi-av">M</div>
           <div>
             <div class="testi-name">Chị Minh Nguyệt</div>
             <div class="testi-role">Phụ huynh học sinh lớp 5</div>
@@ -865,7 +881,7 @@ footer {
         <div class="testi-stars">★★★★★</div>
         <div class="testi-quote">Sau vài tháng học, con đã tự làm được game Scratch đầu tiên và demo cho cả nhà xem. Con tự hào lắm — và tôi cũng vậy.</div>
         <div class="testi-author">
-          <div class="testi-avatar">H</div>
+          <div class="testi-av">H</div>
           <div>
             <div class="testi-name">Anh Hoàng Phúc</div>
             <div class="testi-role">Phụ huynh học sinh lớp 4</div>
@@ -876,7 +892,7 @@ footer {
         <div class="testi-stars">★★★★★</div>
         <div class="testi-quote">Điều tôi thấy rõ nhất là con tự tin hơn khi nói tiếng Anh, ngay cả khi trình bày dự án với người lạ. Cách lồng ghép hai kỹ năng rất thông minh.</div>
         <div class="testi-author">
-          <div class="testi-avatar">L</div>
+          <div class="testi-av">L</div>
           <div>
             <div class="testi-name">Chị Lan Anh</div>
             <div class="testi-role">Phụ huynh học sinh lớp 6</div>
@@ -887,7 +903,7 @@ footer {
         <div class="testi-stars">★★★★★</div>
         <div class="testi-quote">Giáo viên rất tâm huyết, giải thích dễ hiểu và quan tâm đến từng học sinh. Con học được 7 tháng mà tiến bộ vượt bậc, đặc biệt về tư duy logic.</div>
         <div class="testi-author">
-          <div class="testi-avatar">T</div>
+          <div class="testi-av">T</div>
           <div>
             <div class="testi-name">Anh Thanh Tùng</div>
             <div class="testi-role">Phụ huynh học sinh lớp 7</div>
@@ -901,50 +917,71 @@ footer {
 <!-- ── TEACHER ───────────────────────────────────────── -->
 <section class="teacher" id="teacher">
   <div class="container">
+    <div class="section-head">
+      <div class="chip">Giảng Viên</div>
+      <h2>Người Dẫn Đường</h2>
+    </div>
     <div class="teacher-inner">
-      <div class="teacher-visual">
-        <div class="teacher-avatar-wrap">
-          👨‍💻
-          <div class="ta-badge">⭐ 4.9 / 5 đánh giá</div>
+      <div class="teacher-card">
+        <div class="teacher-avatar">👨‍💻</div>
+        <div class="teacher-name">Huỳnh Nguyễn Hoàng Tú</div>
+        <div class="teacher-title">Chuyên gia STEM & Kids Coding</div>
+        <div class="teacher-rating">⭐ 4.9 / 5 đánh giá</div>
+        <div class="teacher-skills">
+          <span class="ts-pill">🎨 Scratch</span>
+          <span class="ts-pill">🐍 Python</span>
+          <span class="ts-pill">🤖 AI</span>
+          <span class="ts-pill">🌐 Web</span>
+          <span class="ts-pill">📱 App</span>
+          <span class="ts-pill">🔬 STEM</span>
         </div>
       </div>
-      <div class="teacher-text">
-        <div class="tag">Giảng Viên</div>
+      <div class="teacher-bio">
+        <div class="chip">Giảng Viên</div>
         <h2>Huỳnh Nguyễn Hoàng Tú</h2>
-        <div class="teacher-title">Chuyên gia Lập Trình Trẻ Em & STEM Education</div>
+        <div class="t-role">Chuyên gia Lập Trình Trẻ Em & STEM Education</div>
         <p>Với nhiều năm kinh nghiệm giảng dạy lập trình cho trẻ em, thầy Tú đã giúp hàng trăm học sinh K-12 từ chỗ không biết gì về công nghệ đến chỗ tự mình xây dựng được sản phẩm thực tế.</p>
-        <p style="margin-top:12px">Phương pháp giảng dạy tập trung vào tư duy sản phẩm, không chỉ dạy code — học sinh học cách suy nghĩ như một kỹ sư thực sự.</p>
-        <div class="teacher-skills">
-          <span class="teacher-skill">🎨 Scratch</span>
-          <span class="teacher-skill">🐍 Python</span>
-          <span class="teacher-skill">🤖 AI</span>
-          <span class="teacher-skill">🌐 Web Dev</span>
-          <span class="teacher-skill">📱 App Inventor</span>
-          <span class="teacher-skill">🔬 STEM</span>
+        <p>Phương pháp giảng dạy tập trung vào tư duy sản phẩm — học sinh học cách suy nghĩ như một kỹ sư thực sự, không chỉ viết code theo mẫu.</p>
+        <p style="margin-top:10px;">Mỗi học sinh được theo dõi tiến độ cá nhân và điều chỉnh lộ trình phù hợp — không có lớp học đại trà một chiều.</p>
+        <div style="margin-top:20px;">
+          <a href="#register" class="btn-filled">Gặp Thầy Tú →</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── CTA / REGISTER ────────────────────────────────── -->
-<section class="cta-section" id="register">
+<!-- ── REGISTER ──────────────────────────────────────── -->
+<section class="register" id="register">
   <div class="container">
-    <div class="cta-inner">
-      <div class="cta-text">
-        <div class="tag tag--mint">Miễn Phí 100%</div>
+    <div class="register-inner">
+      <div class="register-text">
+        <div class="chip chip--teal" style="border-color:rgba(0,229,201,.5);color:#81C995;">Miễn Phí 100%</div>
         <h2>Đăng Ký Buổi Học Thử Ngay Hôm Nay</h2>
-        <p>Một buổi học thử miễn phí — không cam kết, không điều kiện. Để con tự cảm nhận trước khi bạn quyết định.</p>
-        <div class="cta-perks">
-          <div class="cta-perk">Trải nghiệm môi trường học thực tế</div>
-          <div class="cta-perk">Giáo viên đánh giá trình độ và tư vấn lộ trình phù hợp</div>
-          <div class="cta-perk">Con được làm dự án nhỏ ngay trong buổi đầu tiên</div>
-          <div class="cta-perk">Không cần chuẩn bị bất kỳ thứ gì trước</div>
+        <p>Một buổi học thử hoàn toàn miễn phí — không cam kết, không điều kiện. Để con tự cảm nhận trước khi bạn quyết định.</p>
+        <div class="register-perks">
+          <div class="perk-item">
+            <div class="perk-check">✓</div>
+            <span>Trải nghiệm môi trường học thực tế ngay buổi đầu</span>
+          </div>
+          <div class="perk-item">
+            <div class="perk-check">✓</div>
+            <span>Giáo viên đánh giá trình độ và tư vấn lộ trình phù hợp</span>
+          </div>
+          <div class="perk-item">
+            <div class="perk-check">✓</div>
+            <span>Con được làm dự án nhỏ ngay trong buổi đầu tiên</span>
+          </div>
+          <div class="perk-item">
+            <div class="perk-check">✓</div>
+            <span>Không cần chuẩn bị bất kỳ thứ gì trước</span>
+          </div>
         </div>
       </div>
+
       <div class="form-card">
         <h3>Đăng Ký Học Thử</h3>
-        <div class="form-sub">Điền thông tin — chúng tôi sẽ liên hệ trong 24 giờ</div>
+        <div class="fc-sub">Điền thông tin — chúng tôi sẽ liên hệ trong 24 giờ</div>
         <div class="form-field">
           <label>Họ tên phụ huynh *</label>
           <input type="text" placeholder="Nguyễn Thị Bình">
@@ -961,7 +998,9 @@ footer {
           <label>Số điện thoại *</label>
           <input type="tel" placeholder="0901 234 567">
         </div>
-        <a href="#" class="form-submit">Đăng Ký Ngay →</a>
+        <button class="form-submit" onclick="this.textContent='✓ Đã gửi! Chúng tôi sẽ liên hệ sớm'; this.style.background='#1E8E3E';">
+          Đăng Ký Ngay →
+        </button>
         <div class="form-note">🔒 Thông tin của bạn được bảo mật tuyệt đối</div>
       </div>
     </div>
@@ -971,13 +1010,27 @@ footer {
 <!-- ── FOOTER ────────────────────────────────────────── -->
 <footer>
   <div class="container">
-    <div class="footer-inner">
-      <div class="footer-logo">Kids<span>Coding</span> Academy</div>
-      <div class="footer-links">
-        <a href="#benefits">Khoá Học</a>
-        <a href="#roadmap">Lộ Trình</a>
-        <a href="#teacher">Giáo Viên</a>
-        <a href="#register">Đăng Ký</a>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Kids<em>Coding</em> Academy</div>
+        <div class="footer-tagline">Nơi ươm mầm công nghệ cho thế hệ tương lai</div>
+      </div>
+      <div>
+        <div class="footer-links-title">Điều Hướng</div>
+        <div class="footer-links">
+          <a href="#courses">Khóa Học</a>
+          <a href="#roadmap">Lộ Trình</a>
+          <a href="#teacher">Giáo Viên</a>
+          <a href="#register">Đăng Ký</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-links-title">Liên Hệ</div>
+        <div class="footer-contact" style="color:rgba(255,255,255,.5);">
+          📍 Dĩ An, Bình Dương<br>
+          📞 Liên hệ qua form đăng ký<br>
+          🕐 Thứ 2 – Thứ 7: 8:00 – 20:00
+        </div>
       </div>
     </div>
     <div class="footer-bottom">© 2026 Kids Coding Academy. Mọi quyền được bảo lưu.</div>
